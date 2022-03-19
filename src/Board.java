@@ -1,7 +1,10 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -15,6 +18,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	private final static int BoxDimensions = 50;
 	
 	private int[] cursorCoords = new int[2];
+	private int[][] numbers = new int [9][9];
 	
 	public Board() {
 		
@@ -22,6 +26,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         
         setBackground(new Color(225, 225, 225));
 
+        
 	}
 
 	// Key Listener //
@@ -61,9 +66,11 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 				//	System.out.println("%d, %d".formatted(boxX, boxY));
 				//	System.out.println("%d, %d".formatted(boxX/3, boxY/3));
 	
-				cursorCoords[0]  = boxX;
-				cursorCoords[1]  = boxY;
+				cursorCoords[0] = boxX;
+				cursorCoords[1] = boxY;
 				
+				numbers[boxX][boxY] += 1;
+								
 				repaint();
 				
 			}
@@ -82,12 +89,28 @@ public class Board extends JPanel implements KeyListener, MouseListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
+//        Graphics2D g2d = (Graphics2D) g;
+//        g2d.setRenderingHint(
+//            RenderingHints.KEY_TEXT_ANTIALIASING,
+//            RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+//        g2d.setRenderingHint(
+//            RenderingHints.KEY_RENDERING,
+//            RenderingHints.VALUE_RENDER_QUALITY);
+//        g2d.setRenderingHint(
+//            RenderingHints.KEY_FRACTIONALMETRICS,
+//            RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+//        
+//        g2d.setFont(new Font("Lato", Font.PLAIN, 25));
+//        
+//        
         // Checkers
         g.setColor(new Color(200, 200, 200));
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
+            
                 if ((row + col) % 2 == 1) {
-                    g.fillRect(
+                	
+                	g.fillRect(
                         col * BoxDimensions, 
                         row * BoxDimensions, 
                         BoxDimensions, 
@@ -97,6 +120,15 @@ public class Board extends JPanel implements KeyListener, MouseListener {
             }    
         }
         
+        // Numbers
+        // Had issue with half the board checkers overwritng the text
+        g.setColor(new Color(255, 255, 255));
+        g.setFont(g.getFont().deriveFont(24.0f));
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                g.drawString(String.valueOf(numbers[row][col]), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
+            }
+        }
         
         // Black lines (Large 3x3)
         g.setColor(new Color(90, 90, 90));
@@ -118,14 +150,13 @@ public class Board extends JPanel implements KeyListener, MouseListener {
             );
         }
         
+        // Cursor
         g.drawRect(
     		cursorCoords[0]*BoxDimensions,
             cursorCoords[1]*BoxDimensions,
             BoxDimensions,
             BoxDimensions
         );
-        
-        
         
     }
 	
