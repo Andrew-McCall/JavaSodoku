@@ -33,7 +33,12 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		
+		if (e.getKeyCode() >= 49 && e.getKeyCode() < 59) { // Number Input
+
+			numbers[cursorCoords[0]][cursorCoords[1]] = e.getKeyCode()-48;
+			
+		}else if (e.getKeyCode() == KeyEvent.VK_LEFT) {		// Arrow Controls
 			cursorCoords[0] -= 1;
 			if (cursorCoords[0] < 0) cursorCoords[0] = 8;
 		}else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -44,7 +49,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 			if (cursorCoords[1] < 0) cursorCoords[1] = 8;
 		}else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			cursorCoords[1] += 1;
-			if (cursorCoords[0] > 8) cursorCoords[1] = 0;
+			if (cursorCoords[1] > 8) cursorCoords[1] = 0;
 		}
 	
 		repaint();
