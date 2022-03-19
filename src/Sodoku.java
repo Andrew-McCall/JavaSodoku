@@ -4,22 +4,26 @@ public class Sodoku {
 	
 	public static void main(String[] args) {
 		
-//		JFrame window = new JFrame("Sodoku");
-//
-//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//        window.setResizable(false);
-//        window.pack();
-//        window.setLocationRelativeTo(null);
-//        window.setVisible(true);
-//        
-        Board board = new Board(42);
-        System.out.println(board.test);
+		JFrame window = new JFrame("Sodoku");
+
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         
-        board.add(-40);
+
+        Board board = new Board();
         
-        System.out.println(board.test);
         
+        window.add(board);
+        window.addKeyListener(board);
+        window.addMouseListener(board);
+
+        window.setFocusable(true); 
+        
+        window.setResizable(true);
+        window.pack();
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+                
 	}
 
 }
