@@ -76,25 +76,30 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// Also works in Clicked but Click is only classed if
+		// could be in Clicked but Click is only classed if
 		// press and release coords are the same.
-		if (e.getButton() == 1){
+		
+		// 10 & 30 account for window border offset
+		final int boxX = (e.getPoint().x-10) / BoxDimensions;			
+		final int boxY = (e.getPoint().y-30) / BoxDimensions;
+
+		//	System.out.println("%d, %d".formatted(boxX, boxY));
+		//	System.out.println("%d, %d".formatted(boxX/3, boxY/3));
+		cursorCoords[0] = boxX;
+		cursorCoords[1] = boxY;
 					
-				// 10 & 30 account for window border offset
-				final int boxX = (e.getPoint().x-10) / BoxDimensions;			
-				final int boxY = (e.getPoint().y-30) / BoxDimensions;
-	
-				//	System.out.println("%d, %d".formatted(boxX, boxY));
-				//	System.out.println("%d, %d".formatted(boxX/3, boxY/3));
-	
-				cursorCoords[0] = boxX;
-				cursorCoords[1] = boxY;
+		if (e.getButton() == 1){
+			
+			numbers[boxX][boxY] = (numbers[boxX][boxY] + 1)%10;
 				
-				numbers[boxX][boxY] += 1;
-								
-				repaint();
-				
-			}
+		}else if (e.getButton() == 3){
+			
+			numbers[boxX][boxY] = 0;
+
+		}
+		
+		repaint();
+		
 	}
 
 	@Override
@@ -133,7 +138,9 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         g.setFont(g.getFont().deriveFont(FontSize));
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
-                g.drawString(String.valueOf(numbers[row][col]), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
+            	if (numbers[row][col] != 0) {
+                    g.drawString(String.valueOf(numbers[row][col]), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
+            	}
             }
         }
         
