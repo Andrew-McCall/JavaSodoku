@@ -8,10 +8,7 @@ public class Sodoku {
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        
-
         Board board = new Board();
-        
         
         window.add(board);
         window.addKeyListener(board);
@@ -19,7 +16,7 @@ public class Sodoku {
 
         window.setFocusable(true); 
         
-        window.setResizable(true);
+        window.setResizable(false);
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
