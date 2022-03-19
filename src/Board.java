@@ -13,7 +13,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	
 	private static final long serialVersionUID = -1258829533504593980L;
 	
-	private final static int FontSize = 22;
+	private final static float FontSize = 22.0f;
 	private final static int LineThickness = 4;
 	private final static int BoxDimensions = 50;
 	
@@ -32,11 +32,27 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	// Key Listener //
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			cursorCoords[0] -= 1;
+			if (cursorCoords[0] < 0) cursorCoords[0] = 8;
+		}else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			cursorCoords[0] += 1;
+			if (cursorCoords[0] > 8) cursorCoords[0] = 0;
+		}else if (e.getKeyCode() == KeyEvent.VK_UP) {
+			cursorCoords[1] -= 1;
+			if (cursorCoords[1] < 0) cursorCoords[1] = 8;
+		}else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			cursorCoords[1] += 1;
+			if (cursorCoords[0] > 8) cursorCoords[1] = 0;
+		}
+	
+		repaint();
+		
 	}
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println(e.getKeyChar());		
 	}
 
 	@Override
@@ -88,21 +104,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	@Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
-//        Graphics2D g2d = (Graphics2D) g;
-//        g2d.setRenderingHint(
-//            RenderingHints.KEY_TEXT_ANTIALIASING,
-//            RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-//        g2d.setRenderingHint(
-//            RenderingHints.KEY_RENDERING,
-//            RenderingHints.VALUE_RENDER_QUALITY);
-//        g2d.setRenderingHint(
-//            RenderingHints.KEY_FRACTIONALMETRICS,
-//            RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-//        
-//        g2d.setFont(new Font("Lato", Font.PLAIN, 25));
-//        
-//        
+         
         // Checkers
         g.setColor(new Color(200, 200, 200));
         for (int row = 0; row < 9; row++) {
@@ -123,7 +125,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         // Numbers
         // Had issue with half the board checkers overwritng the text
         g.setColor(new Color(255, 255, 255));
-        g.setFont(g.getFont().deriveFont(24.0f));
+        g.setFont(g.getFont().deriveFont(FontSize));
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 g.drawString(String.valueOf(numbers[row][col]), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
