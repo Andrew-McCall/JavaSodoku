@@ -167,18 +167,20 @@ public class Board extends JPanel implements KeyListener, MouseListener {
             		
             		switch (dataLogic.getMeta(row,col)) {
             			case 0:	// Pencil
-            		        g.setColor(new Color(120, 120, 120));
+            		        g.setColor(new Color(180, 180, 180));
             				break;
+            				
             			case 1: // Regular
             		        g.setColor(new Color(90, 90, 90));
             				break;
-            			case 2: // Permenent
+            				
+            			case 3: // Permenent
             		        g.setColor(new Color(45, 45, 45));
             				break;
-            			default: // Error
-            		        g.setColor(new Color(255, 0, 0));
-        					System.out.println("error");
-
+            				
+            			case 2: // Error
+            			case 4: 
+            		        g.setColor(new Color(255, 45, 45));
             		}
             		
                     g.drawString(String.valueOf(dataLogic.getValue(row,col)), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
