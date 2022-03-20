@@ -7,7 +7,7 @@ public class Sodoku {
 		JFrame window = new JFrame("Sodoku");
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         Board board = new Board();
         
         window.add(board);

@@ -16,19 +16,19 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	private int[] cursorCoords = new int[2];
 	private int[][] numbers = new int [9][9];
 	
+	private Logic dataLogic = new Logic();
+	
 	public Board() {
 		
         setPreferredSize(new Dimension(BoxDimensions*9, BoxDimensions*9));
         
         setBackground(new Color(225, 225, 225));
 
-        
 	}
 
 	// Key Listener //
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
 		
 		if (e.getKeyCode() >= 49 && e.getKeyCode() < 59) { // Number Input
 
@@ -86,11 +86,11 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 					
 		if (e.getButton() == 1){
 			
-			numbers[boxX][boxY] = (numbers[boxX][boxY] + 1)%10;
+			dataLogic.writeNumber(boxX, boxY, (dataLogic.getValue(boxX, boxY) + 1)%10, false);
 				
 		}else if (e.getButton() == 3){
 			
-			numbers[boxX][boxY] = 0;
+			dataLogic.writeNumber(boxX, boxY, 0, false);
 
 		}
 		
@@ -158,13 +158,33 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         
         // Numbers
         // Had issue with half the board checkers overwritng the text
-//        g.setColor(new Color(100, 100, 100));
+        // g.setColor(new Color(100, 100, 100));
         g.setFont(g.getFont().deriveFont(FontSize));
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
-            	if (numbers[row][col] != 0) {
-                    g.drawString(String.valueOf(numbers[row][col]), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
+            	
+            	if (dataLogic.getValue(row,col) != 0) {
+            		
+            		switch (dataLogic.getMeta(row,col)) {
+            			case 0:	// Pencil
+            		        g.setColor(new Color(120, 120, 120));
+            				break;
+            			case 1: // Regular
+            		        g.setColor(new Color(90, 90, 90));
+            				break;
+            			case 2: // Permenent
+            		        g.setColor(new Color(45, 45, 45));
+            				break;
+            			default: // Error
+            		        g.setColor(new Color(255, 0, 0));
+        					System.out.println("error");
+
+            		}
+            		
+                    g.drawString(String.valueOf(dataLogic.getValue(row,col)), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
+            	
             	}
+            	
             }
         }
         
