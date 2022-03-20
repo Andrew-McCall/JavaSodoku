@@ -1,10 +1,6 @@
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -132,18 +128,6 @@ public class Board extends JPanel implements KeyListener, MouseListener {
             }    
         }
         
-        // Numbers
-        // Had issue with half the board checkers overwritng the text
-        g.setColor(new Color(255, 255, 255));
-        g.setFont(g.getFont().deriveFont(FontSize));
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-            	if (numbers[row][col] != 0) {
-                    g.drawString(String.valueOf(numbers[row][col]), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
-            	}
-            }
-        }
-        
         // Black lines (Large 3x3)
         g.setColor(new Color(90, 90, 90));
         for (int row = 1; row < 3; row++) {
@@ -171,6 +155,18 @@ public class Board extends JPanel implements KeyListener, MouseListener {
             BoxDimensions,
             BoxDimensions
         );
+        
+        // Numbers
+        // Had issue with half the board checkers overwritng the text
+//        g.setColor(new Color(100, 100, 100));
+        g.setFont(g.getFont().deriveFont(FontSize));
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+            	if (numbers[row][col] != 0) {
+                    g.drawString(String.valueOf(numbers[row][col]), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
+            	}
+            }
+        }
         
     }
 	
