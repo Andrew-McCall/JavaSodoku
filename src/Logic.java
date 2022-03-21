@@ -34,9 +34,8 @@ public class Logic {
 	}
 	
 	private void checkBox (int x, int y) {
-
-		boolean isError = false;
 		
+		boolean isError = false;
 		int boxX = x / 3;
 		int boxY = y / 3;
 		
@@ -69,12 +68,12 @@ public class Logic {
 		
 		for (int i = 0; i < 9; i++) {
 
-			if (y != i && numbersValue[x][i] == numbersValue[x][y]) {
+			if (y != i && numbersMeta[x][i] != 0 && numbersValue[x][i] == numbersValue[x][y]) {
 				setError(x, i, true);
 				isError = true;
 			}
 			
-			if (x != i && numbersValue[i][y] == numbersValue[x][y]) {
+			if (x != i && numbersMeta[i][y] != 0  && numbersValue[i][y] == numbersValue[x][y]) {
 				setError(i, y, true);
 				isError = true;
 			}
