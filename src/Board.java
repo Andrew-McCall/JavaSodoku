@@ -13,7 +13,10 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	private final static int LineThickness = 4;
 	private final static int BoxDimensions = 50;
 	
-	private int[] cursorCoords = new int[2];
+	private int[] cursorCoords = {4, 4};
+	
+	private boolean pencil = true;
+	private int selectedNo = 0;
 	
 	private Logic dataLogic;
 	
@@ -21,7 +24,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 		
 		dataLogic = data;
 		
-        setPreferredSize(new Dimension(BoxDimensions*9, BoxDimensions*9));
+        setPreferredSize(new Dimension(BoxDimensions*9, BoxDimensions*11));
         
         setBackground(new Color(225, 225, 225));
 
@@ -31,10 +34,11 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
-		if (e.getKeyCode() >= 49 && e.getKeyCode() < 59) { // Number Input
+		if (e.getKeyCode() >= 48 && e.getKeyCode() < 59) { // Number Input
 
 			dataLogic.writeNumber(cursorCoords[0], cursorCoords[1], e.getKeyCode() - 48, false);
-
+			selectedNo = e.getKeyCode() - 48;
+			
 		}else if (e.getKeyCode() == KeyEvent.VK_LEFT) {		// Arrow Controls
 			cursorCoords[0] -= 1;
 			if (cursorCoords[0] < 0) cursorCoords[0] = 8;
@@ -47,8 +51,11 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 		}else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			cursorCoords[1] += 1;
 			if (cursorCoords[1] > 8) cursorCoords[1] = 0;
+		}else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			dataLogic.writeNumber(cursorCoords[0], cursorCoords[1], 0, false);
+			selectedNo = 0;
 		}
-	
+		
 		repaint();
 		
 	}
@@ -61,23 +68,48 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 		// 10 & 30 account for window border offset
 		final int boxX = (e.getPoint().x-10) / BoxDimensions;			
 		final int boxY = (e.getPoint().y-30) / BoxDimensions;
-
-		if (boxX > 8 || boxX < 0 || boxY > 8 || boxY < 0) {
-			return;
-		}
 		
-		cursorCoords[0] = boxX;
-		cursorCoords[1] = boxY;
+        int buttonSize = (int) (this.getWidth()/11); 
+        int spacingSize = (int) (this.getWidth()*0.01);
+        
+		if (boxX > 8 || boxX < 0 || boxY > 8 || boxY < 0) {
+			
+			boolean buttonFound = false;
+			
+			for (int i = 0; i<10; i++) {
+				if (boxY == 9 && e.getPoint().x-10 > (buttonSize+spacingSize)*i+spacingSize+2 && e.getPoint().x-10 < (buttonSize+spacingSize)*i+spacingSize+2+buttonSize) {
+					selectedNo = i;
+					buttonFound = true;
+					break;
+				}
 					
-		if (e.getButton() == 1){
+			}
 			
-			dataLogic.writeNumber(boxX, boxY, (dataLogic.getValue(boxX, boxY) + 1)%10, false);
+			if (!buttonFound) {
+				if (e.getPoint().x-10 > spacingSize * 6 && e.getPoint().y-30 > BoxDimensions*10+spacingSize-4 && e.getPoint().x-10 < spacingSize * 6+buttonSize*4 && e.getPoint().y-30 < BoxDimensions*10+spacingSize-4+buttonSize) {
+					pencil = true;
+				}else if (e.getPoint().x-10 > BoxDimensions*5 + spacingSize * 4 && e.getPoint().y-30 > BoxDimensions*10+spacingSize-4 && e.getPoint().x-10 < BoxDimensions*5 + spacingSize * 4 + buttonSize*4 && e.getPoint().y-30 < BoxDimensions*10+spacingSize-4+buttonSize ) {
+					pencil = false;
+				}
+			}
+			
+		} else {
+			cursorCoords[0] = boxX;
+			cursorCoords[1] = boxY;
+						
+			if (e.getButton() == 1){
 				
-		}else if (e.getButton() == 3){
-			
-			dataLogic.writeNumber(boxX, boxY, (dataLogic.getValue(boxX, boxY) + 9 )%10, false);
-//			dataLogic.writeNumber(boxX, boxY, 0, false);
+				dataLogic.writeNumber(boxX, boxY, selectedNo, pencil);
+					
+			}else if (e.getButton() == 3){
+				
+//				dataLogic.writeNumber(boxX, boxY, (dataLogic.getValue(boxX, boxY) + 9 )%10, false);
+////				dataLogic.writeNumber(boxX, boxY, 0, false);
 
+				pencil = !pencil;	
+			}
+		
+		
 		}
 		
 		repaint();
@@ -170,7 +202,50 @@ public class Board extends JPanel implements KeyListener, MouseListener {
             	}
             	
             }
+            
         }
+        
+        // Mouse Extra //
+        int buttonSize = (int) (this.getWidth()/11); 
+        int spacingSize = (int) (this.getWidth()*0.01);
+        for (int i = 0; i < 10; i++) {
+            g.setColor(new Color(205, 205, 205));
+
+        	if ((i) == selectedNo ) {
+                g.setColor(new Color(120, 120, 120));
+        	}
+ 
+        	 g.fillRect(
+        	    ((buttonSize+spacingSize)*i)+spacingSize+2,
+        	    BoxDimensions*9+spacingSize,
+        	    buttonSize,
+        	    buttonSize
+        	);
+        	 
+             g.setColor(new Color(245, 245, 245));
+             g.drawString(String.valueOf(i), (int) (((buttonSize+spacingSize)*i)+(spacingSize*4)), BoxDimensions*9+(int) FontSize);
+
+         }
+        
+        g.setColor((pencil) ? new Color(120, 120, 120) : new Color(205, 205, 205));
+        g.fillRect(
+    	    spacingSize * 6,
+    	    BoxDimensions*10+spacingSize-4,
+    	    buttonSize*4,
+    	    buttonSize
+    	);
+        g.setColor(new Color(245, 245, 245));
+        g.drawString("Pencil", spacingSize * 14, BoxDimensions*10+spacingSize*8);
+
+        g.setColor((!pencil) ? new Color(120, 120, 120) : new Color(205, 205, 205));
+        g.fillRect(
+        	BoxDimensions*5 + spacingSize * 4,
+    	    BoxDimensions*10+spacingSize-4,
+    	    buttonSize*4,
+    	    buttonSize
+    	);
+        g.setColor(new Color(245, 245, 245));
+        g.drawString("Pen", (int) BoxDimensions*6 + spacingSize * 5, BoxDimensions*10+spacingSize*8);
         
     }
 	
@@ -185,7 +260,6 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	// Mouse Listener //
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
 	}
 
 	@Override
@@ -199,6 +273,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
+	
 	// Getters
 	public static float getFontsize() {
 		return FontSize;

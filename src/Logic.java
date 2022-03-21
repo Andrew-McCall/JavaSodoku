@@ -9,7 +9,6 @@ public class Logic {
 			numbersMeta[x][y] = pencil ? 0 : 1;
 			numbersValue[x][y] = value;
 			
-				
 			checkLegal(x,y);
 		
 		}
@@ -27,8 +26,11 @@ public class Logic {
 			}
 		}
 		
-		checkStraights(x, y);
-		checkBox(x,y);
+		if (numbersMeta[x][y] != 0) {
+			checkStraights(x, y);
+			checkBox(x,y);
+		}
+		
 	}
 	
 	private void checkBox (int x, int y) {
