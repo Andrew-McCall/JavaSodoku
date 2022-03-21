@@ -209,7 +209,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         int buttonSize = (int) (this.getWidth()/11); 
         int spacingSize = (int) (this.getWidth()*0.01);
         for (int i = 0; i < 10; i++) {
-            g.setColor(new Color(205, 205, 205));
+            g.setColor(new Color(200, 200, 200));
 
         	if ((i) == selectedNo ) {
                 g.setColor(new Color(120, 120, 120));
