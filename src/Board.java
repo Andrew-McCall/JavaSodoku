@@ -9,12 +9,11 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	
 	private static final long serialVersionUID = -1258829533504593980L;
 	
-	private final static float FontSize = 28.0f;
+	private final static float FontSize = 36.0f;
 	private final static int LineThickness = 4;
 	private final static int BoxDimensions = 50;
 	
 	private int[] cursorCoords = new int[2];
-	private int[][] numbers = new int [9][9];
 	
 	private Logic dataLogic = new Logic();
 	
@@ -164,6 +163,10 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
             	
+            	// Debug Lines (Meta as pencil Perma)
+		        g.setColor(new Color(180, 180, 180));
+                g.drawString(String.valueOf(dataLogic.getMeta(row,col)), row*BoxDimensions + BoxDimensions/3 , col*BoxDimensions + (int) FontSize);
+
             	if (dataLogic.getValue(row,col) != 0) {
             		
             		switch (dataLogic.getMeta(row,col)) {
@@ -184,7 +187,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
             		        g.setColor(new Color(255, 45, 45));
             		}
             		
-                    g.drawString(String.valueOf(dataLogic.getValue(row,col)), row*BoxDimensions + BoxDimensions/4, col*BoxDimensions + BoxDimensions/2);
+                    g.drawString(String.valueOf(dataLogic.getValue(row,col)), row*BoxDimensions + BoxDimensions/3 , col*BoxDimensions + (int) FontSize);
             	
             	}
             	
