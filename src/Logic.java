@@ -22,7 +22,7 @@ public class Logic {
 				if ((numbersMeta[i][z] == 2 || numbersMeta[i][z] == 4) && numbersValue[i][z] != 0){
 					setError(i, z, false);
 					checkStraights(i, z);
-
+					checkBox(i,z);
 				}
 			}
 		}
@@ -97,8 +97,20 @@ public class Logic {
 		}
 	}
 		
+	// Public Functions (Getters Also)
+	public void resetValues() {
+		for (int i = 0; i < 9; i++) {
+			for (int z = 0; z < 9; z++) {
+				if (numbersMeta[i][z] > 3){
+					setError(i, z, false);
+				}else {
+					numbersMeta[i][z] = 0;
+					numbersValue[i][z] = 0;
+				}
+			}
+		}
+	}
 	
-	// Getters
 	public int getValue(int x, int y) {
 		return numbersValue[x][y];
 	}

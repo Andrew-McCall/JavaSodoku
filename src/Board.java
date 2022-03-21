@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Board extends JPanel implements KeyListener, MouseListener {
-	
+
 	private static final long serialVersionUID = -1258829533504593980L;
 	
 	private final static float FontSize = 36.0f;
@@ -15,9 +15,11 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	
 	private int[] cursorCoords = new int[2];
 	
-	private Logic dataLogic = new Logic();
+	private Logic dataLogic;
 	
-	public Board() {
+	public Board(Logic data) {
+		
+		dataLogic = data;
 		
         setPreferredSize(new Dimension(BoxDimensions*9, BoxDimensions*9));
         
@@ -52,24 +54,6 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	}
 	
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-	}
-
-	// Mouse Listener //
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-	}
-
-	@Override
 	public void mouseReleased(MouseEvent e) {
 		// could be in Clicked but Click is only classed if
 		// press and release coords are the same.
@@ -78,8 +62,10 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 		final int boxX = (e.getPoint().x-10) / BoxDimensions;			
 		final int boxY = (e.getPoint().y-30) / BoxDimensions;
 
-		//	System.out.println("%d, %d".formatted(boxX, boxY));
-		//	System.out.println("%d, %d".formatted(boxX/3, boxY/3));
+		if (boxX > 8 || boxX < 0 || boxY > 8 || boxY < 0) {
+			return;
+		}
+		
 		cursorCoords[0] = boxX;
 		cursorCoords[1] = boxY;
 					
@@ -96,14 +82,6 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 		
 		repaint();
 		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
 	}
 	
 	// Graphics //
@@ -195,5 +173,39 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         }
         
     }
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+	// Mouse Listener //
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+	// Getters
+	public static float getFontsize() {
+		return FontSize;
+	}
+
+	public static int getBoxdimensions() {
+		return BoxDimensions;
+	}
 	
 }
