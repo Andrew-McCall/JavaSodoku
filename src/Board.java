@@ -164,8 +164,8 @@ public class Board extends JPanel implements KeyListener, MouseListener {
             for (int col = 0; col < 9; col++) {
             	
             	// Debug Lines (Meta as pencil Perma)
-		        g.setColor(new Color(180, 180, 180));
-                g.drawString(String.valueOf(dataLogic.getMeta(row,col)), row*BoxDimensions + BoxDimensions/3 , col*BoxDimensions + (int) FontSize);
+//		        g.setColor(new Color(180, 180, 180));
+//                g.drawString(String.valueOf(dataLogic.getMeta(row,col)), row*BoxDimensions + BoxDimensions/3 , col*BoxDimensions + (int) FontSize);
 
             	if (dataLogic.getValue(row,col) != 0) {
             		
