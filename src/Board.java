@@ -90,7 +90,8 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 				
 		}else if (e.getButton() == 3){
 			
-			dataLogic.writeNumber(boxX, boxY, 0, false);
+			dataLogic.writeNumber(boxX, boxY, (dataLogic.getValue(boxX, boxY) + 9 )%10, false);
+//			dataLogic.writeNumber(boxX, boxY, 0, false);
 
 		}
 		

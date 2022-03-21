@@ -28,50 +28,34 @@ public class Logic {
 	
 	private void checkLegal(int x, int y) {
 		
-		checkOne(x, y);
+		setError(x, y, true);
 		
 		for (int i = 0; i < 9; i++) {
 			for (int z = 0; z < 9; z++) {
-				if (numbersMeta[i][z] != 0 && numbersMeta[i][z] % 2 == 0){
+				if ((numbersMeta[i][z] == 2 || numbersMeta[i][z] == 4) && numbersValue[i][z] != 0 ){
+					setError(i, z, false);
 					checkOne(i, z);
 				}
 			}
 		}
-		
-		
 
 	}
 	
 	private void checkOne (int x, int y) {
 		
-		setError(x, y, false);
-		
-		int[] prevY = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-		int[] prevX = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-				
 		for (int i = 0; i < 9; i++) {
 
-			if (numbersValue[x][i] > 0) {
-				if (prevX[numbersValue[x][i] - 1] != -1) {
-					setError(x, i, true);
-					setError(x, prevX[numbersValue[x][i] - 1], true);
-				}else {
-					prevX[numbersValue[x][i] - 1] = i;
-				}
+			if (y != i && numbersValue[x][i] == numbersValue[x][y]) {
+				setError(x, i, true);
+				setError(x, y, true);
 			}
 			
-			if (numbersValue[i][y] > 0) {
-				if (prevY[numbersValue[i][y] - 1] != -1) {
-					setError(i, y, true);
-					setError(prevY[numbersValue[i][y] - 1], i, true);
-				}else {
-					prevY[numbersValue[i][y] - 1] = i;
-				}
+			if (x != i && numbersValue[i][y] == numbersValue[x][y]) {
+				setError(i, y, true);
+				setError(x, y, true);
 			}
 			
 		}
-		
-		
 		
 	}
 	
