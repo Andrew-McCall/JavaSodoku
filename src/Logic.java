@@ -1,11 +1,7 @@
-import java.util.ArrayList;
-
 public class Logic {
 	
 	private int[][] numbersValue = new int [9][9];
 	private int[][] numbersMeta = new int [9][9];
-
-	private  ArrayList<int[]> errors = new ArrayList<int[]>();
 	
 	public Logic() {
 		// TODO Auto-generated constructor stub
@@ -27,34 +23,40 @@ public class Logic {
 		}
 	
 	private void checkLegal(int x, int y) {
-		
-		setError(x, y, true);
-		
+				
 		for (int i = 0; i < 9; i++) {
 			for (int z = 0; z < 9; z++) {
 				if ((numbersMeta[i][z] == 2 || numbersMeta[i][z] == 4) && numbersValue[i][z] != 0 ){
 					setError(i, z, false);
-					checkOne(i, z);
+					checkStraights(i, z);
 				}
 			}
 		}
+		
+		checkStraights(x, y);
 
 	}
 	
-	private void checkOne (int x, int y) {
+	private void checkStraights (int x, int y) {
+		
+		boolean isError = false;
 		
 		for (int i = 0; i < 9; i++) {
 
 			if (y != i && numbersValue[x][i] == numbersValue[x][y]) {
 				setError(x, i, true);
-				setError(x, y, true);
+				isError = true;
 			}
 			
 			if (x != i && numbersValue[i][y] == numbersValue[x][y]) {
 				setError(i, y, true);
-				setError(x, y, true);
+				isError = true;
 			}
 			
+		}
+		
+		if (isError) {
+			setError(x, y, true);
 		}
 		
 	}

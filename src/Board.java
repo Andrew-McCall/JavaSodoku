@@ -9,7 +9,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	
 	private static final long serialVersionUID = -1258829533504593980L;
 	
-	private final static float FontSize = 22.0f;
+	private final static float FontSize = 28.0f;
 	private final static int LineThickness = 4;
 	private final static int BoxDimensions = 50;
 	
@@ -32,8 +32,8 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 		
 		if (e.getKeyCode() >= 49 && e.getKeyCode() < 59) { // Number Input
 
-			numbers[cursorCoords[0]][cursorCoords[1]] = e.getKeyCode()-48;
-			
+			dataLogic.writeNumber(cursorCoords[0], cursorCoords[1], e.getKeyCode() - 48, false);
+
 		}else if (e.getKeyCode() == KeyEvent.VK_LEFT) {		// Arrow Controls
 			cursorCoords[0] -= 1;
 			if (cursorCoords[0] < 0) cursorCoords[0] = 8;
