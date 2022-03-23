@@ -60,6 +60,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 		
 	}
 	
+	// Mouse Listener //
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// could be in Clicked but Click is only classed if
@@ -103,10 +104,8 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 					
 			}else if (e.getButton() == 3){
 				
-//				dataLogic.writeNumber(boxX, boxY, (dataLogic.getValue(boxX, boxY) + 9 )%10, false);
-////				dataLogic.writeNumber(boxX, boxY, 0, false);
-
 				pencil = !pencil;	
+				
 			}
 		
 		
@@ -222,9 +221,10 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         	    buttonSize
         	);
         	 
-             g.setColor(new Color(245, 245, 245));
-             g.drawString(String.valueOf(i), (int) (((buttonSize+spacingSize)*i)+(spacingSize*4)), BoxDimensions*9+(int) FontSize);
-
+        	 if (i != 0) {
+                 g.setColor(new Color(245, 245, 245));
+                 g.drawString(String.valueOf(i), (int) (((buttonSize+spacingSize)*i)+(spacingSize*4)), BoxDimensions*9+(int) FontSize);
+        	 }
          }
         
         g.setColor((pencil) ? new Color(120, 120, 120) : new Color(205, 205, 205));
@@ -249,6 +249,16 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         
     }
 	
+	// Getters
+	public static float getFontsize() {
+		return FontSize;
+	}
+
+	public static int getBoxdimensions() {
+		return BoxDimensions;
+	}
+	
+	// Unused Impl
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
@@ -257,7 +267,6 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	public void keyReleased(KeyEvent e) {
 	}
 
-	// Mouse Listener //
 	@Override
 	public void mouseClicked(MouseEvent e) {
 	}
@@ -272,15 +281,6 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-	}
-	
-	// Getters
-	public static float getFontsize() {
-		return FontSize;
-	}
-
-	public static int getBoxdimensions() {
-		return BoxDimensions;
 	}
 	
 }
