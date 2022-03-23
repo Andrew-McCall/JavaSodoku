@@ -2,6 +2,12 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.util.Random;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -32,16 +38,15 @@ public class Sodoku {
         empty.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				player(dataLogic, menu, window);
+				boardinnit(dataLogic, menu, window);
 	        }
          });
         
         random.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				player(dataLogic, menu, window);
+				dataLogic.loadGame(getGameData());
+				boardinnit(dataLogic, menu, window);
 	        }
          });
         
@@ -55,9 +60,7 @@ public class Sodoku {
         menu.add(exit);
         
         window.add(menu);
-        
-//        player(dataLogic, window);
-        
+               
         window.setFocusable(true); 
         window.setResizable(false);
         window.pack();
@@ -66,8 +69,33 @@ public class Sodoku {
                 
 	}
 	
+	private static int[] getGameData() {
+		
+		int[] output = new int[81];
+		
+		try {
+			String result = "";
+			final RandomAccessFile f = new RandomAccessFile(new File("").getAbsolutePath() + "/data/games.csv", "r");
+		    Random rand = new Random(); //instance of random class
+	        f.seek(rand.nextInt((int) (Math.floor(f.length()/81)*81)));
+	        f.readLine();
+		    result = f.readLine();
+		    f.close();
+		    
+		    
+		    for (int i = 0; i < result.length(); i++) {
+		    	output[i] =  Character.getNumericValue(result.charAt(i))  ;
+		    } 
+		    
+	    } catch (Exception e) {
+	      System.out.println("Could not Load Game");
+	      e.printStackTrace();
+	    }
+		
+		return output;
+	}
 	
-	private static void player(Logic dataLogic, JPanel menu, JFrame window) {
+	private static void boardinnit(Logic dataLogic, JPanel menu, JFrame window) {
 		Board board = new Board(dataLogic);
 		menu.setVisible(false);
         window.add(board);

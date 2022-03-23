@@ -108,7 +108,6 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 				
 			}
 		
-		
 		}
 		
 		repaint();

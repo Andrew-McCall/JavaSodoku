@@ -3,6 +3,17 @@ public class Logic {
 	private int[][] numbersValue = new int [9][9];
 	private int[][] numbersMeta = new int [9][9];
 
+	public void loadGame(int [] data) {
+		
+		for (int i = 0; i < 9; i++) {
+			for (int z = 0; z < 9; z++) {
+				numbersMeta[i][z] = (data[(i*9)+z] == 0) ? 0 : 3;
+				numbersValue[i][z] = data[(i*9)+z];
+			}
+		}	
+		
+	}
+	
 	public void writeNumber(int x, int y, int value, boolean pencil) {
 
 		if (numbersMeta[x][y] < 3) {
