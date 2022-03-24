@@ -14,8 +14,8 @@ public class Sodoku {
 	public static void main(String[] args) {
 				
 		JFrame window = new JFrame("Sodoku");
-		Logic dataLogic = new Logic(); ;
-
+		Logic dataLogic = new Logic();
+		
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // Menu //
