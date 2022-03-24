@@ -49,7 +49,7 @@ public class Logic {
 			checkBox(x,y);
 		}
 		
-		if (correct == true) {
+		if (correct == false) {
 			Arrays.stream(numbersMeta).forEach(a -> Arrays.fill(a, 5));
 		}
 		

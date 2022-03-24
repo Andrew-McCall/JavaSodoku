@@ -66,7 +66,7 @@ public class Sodoku {
                 
 	}
 	
-	private static int[] getGameData() {
+	public static int[] getGameData() {
 		
 		int[] output = new int[81];
 		

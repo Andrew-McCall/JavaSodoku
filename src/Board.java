@@ -93,25 +93,40 @@ public class Board extends JPanel implements KeyListener, MouseListener, ActionL
         
 		if (boxX > 8 || boxX < 0 || boxY > 8 || boxY < 0) {
 			
-			boolean buttonFound = false;
-			
-			for (int i = 0; i<10; i++) {
-				if (boxY == 9 && e.getPoint().x-10 > (buttonSize+spacingSize)*i+spacingSize+2 && e.getPoint().x-10 < (buttonSize+spacingSize)*i+spacingSize+2+buttonSize) {
-					selectedNo = i;
-					buttonFound = true;
-					break;
+			if (dataLogic.getMeta(0, 0) == 5) {
+				//RESTART
+				if (BoxDimensions*10-spacingSize*3.5 < e.getPoint().y-10 && BoxDimensions*10-spacingSize*3.5+buttonSize > e.getPoint().y-10) {
+					time = 0;
+					Timer timer = new Timer(1000, this);
+			        timer.setRepeats(true);
+			        timer.start();
+			        
+					dataLogic.loadGame(Sodoku.getGameData());
+			        
 				}
-					
-			}
-			
-			if (!buttonFound) {
-				if (e.getPoint().x-10 > spacingSize * 6 && e.getPoint().y-30 > BoxDimensions*10+spacingSize-4 && e.getPoint().x-10 < spacingSize * 6+buttonSize*4 && e.getPoint().y-30 < BoxDimensions*10+spacingSize-4+buttonSize) {
-					pencil = true;
-				}else if (e.getPoint().x-10 > BoxDimensions*5 + spacingSize * 4 && e.getPoint().y-30 > BoxDimensions*10+spacingSize-4 && e.getPoint().x-10 < BoxDimensions*5 + spacingSize * 4 + buttonSize*4 && e.getPoint().y-30 < BoxDimensions*10+spacingSize-4+buttonSize ) {
-					pencil = false;
+				
+			}else {
+				boolean buttonFound = false;
+				
+				for (int i = 0; i<10; i++) {
+					if (boxY == 9 && e.getPoint().x-10 > (buttonSize+spacingSize)*i+spacingSize+2 && e.getPoint().x-10 < (buttonSize+spacingSize)*i+spacingSize+2+buttonSize) {
+						selectedNo = i;
+						buttonFound = true;
+						break;
+					}
+						
 				}
+				
+				if (!buttonFound) {
+					if (e.getPoint().x-10 > spacingSize * 6 && e.getPoint().y-30 > BoxDimensions*10+spacingSize-4 && e.getPoint().x-10 < spacingSize * 6+buttonSize*4 && e.getPoint().y-30 < BoxDimensions*10+spacingSize-4+buttonSize) {
+						pencil = true;
+					}else if (e.getPoint().x-10 > BoxDimensions*5 + spacingSize * 4 && e.getPoint().y-30 > BoxDimensions*10+spacingSize-4 && e.getPoint().x-10 < BoxDimensions*5 + spacingSize * 4 + buttonSize*4 && e.getPoint().y-30 < BoxDimensions*10+spacingSize-4+buttonSize ) {
+						pencil = false;
+					}
+				}
+				
 			}
-			
+	
 		} else {
 			cursorCoords[0] = boxX;
 			cursorCoords[1] = boxY;
@@ -227,25 +242,39 @@ public class Board extends JPanel implements KeyListener, MouseListener, ActionL
         // Mouse Extra //
         int buttonSize = (int) (this.getWidth()/11); 
         int spacingSize = (int) (this.getWidth()*0.01);
-        for (int i = 0; i < 10; i++) {
-            g.setColor(new Color(200, 200, 200));
+        
+        if (dataLogic.getMeta(0, 0) != 5) {
+            for (int i = 0; i < 10; i++) {
+                g.setColor(new Color(200, 200, 200));
 
-        	if ((i) == selectedNo ) {
-                g.setColor(new Color(120, 120, 120));
-        	}
- 
-        	 g.fillRect(
-        	    ((buttonSize+spacingSize)*i)+spacingSize+2,
-        	    BoxDimensions*9+spacingSize,
-        	    buttonSize,
-        	    buttonSize
-        	);
-        	 
-        	 if (i != 0) {
-                 g.setColor(new Color(245, 245, 245));
-                 g.drawString(String.valueOf(i), (int) (((buttonSize+spacingSize)*i)+(spacingSize*4)), BoxDimensions*9+(int) FontSize);
-        	 }
-         }
+            	if ((i) == selectedNo ) {
+                    g.setColor(new Color(120, 120, 120));
+            	}
+     
+            	 g.fillRect(
+            	    ((buttonSize+spacingSize)*i)+spacingSize+2,
+            	    BoxDimensions*9+spacingSize,
+            	    buttonSize,
+            	    buttonSize
+            	);
+            	 
+            	 if (i != 0) {
+                     g.setColor(new Color(245, 245, 245));
+                     g.drawString(String.valueOf(i), (int) (((buttonSize+spacingSize)*i)+(spacingSize*4)), BoxDimensions*9+(int) FontSize);
+            	 }
+             }
+        }else {
+        	g.fillRect(
+            	spacingSize+2,
+            	BoxDimensions*9+spacingSize,
+            	(BoxDimensions*9)-spacingSize*2-3,
+            	buttonSize
+            );
+            g.setColor(new Color(245, 245, 245));
+            g.drawString("Click To Play Again", (int) (BoxDimensions*1.5), (int) (BoxDimensions*10-spacingSize*3.5));
+        }
+        
+        
         
         g.setColor((pencil) ? new Color(120, 120, 120) : new Color(205, 205, 205));
         g.fillRect(
@@ -267,6 +296,8 @@ public class Board extends JPanel implements KeyListener, MouseListener, ActionL
         g.setColor(new Color(245, 245, 245));
         g.drawString("Pen", (int) BoxDimensions*6 + spacingSize * 5, BoxDimensions*10+spacingSize*8);
         
+        
+        // Timer // 
         g.setColor(new Color(120, 120, 120));
         g.setFont(g.getFont().deriveFont(FontSize*.85f));
         String timeString = "%d:%d".formatted(time/60, time%60);
