@@ -27,7 +27,7 @@ public class Sodoku {
         menu = new JPanel(new GridLayout(6, 1, 15, 15));
         menu.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel title = new JLabel("Andrew's Sodoku");
+        JLabel title = new JLabel("Andrew's Sudoku");
 
         title.setFont(new Font("Ariel", Font.BOLD, 20));
         title.setHorizontalAlignment(SwingConstants.CENTER);
