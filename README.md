@@ -42,6 +42,7 @@ Space or 0 to clear square
 ## Downloads
 
 Source Code: [Here, Github](https://github.com/Andrew-McCall/JavaSodoku.git) *I used eclipse and Oracle's java 8*
+
 Packaged .exe with JRE included: [Google Drive Download](https://drive.google.com/file/d/1z9oCWfKwdNdvRZ1-wUcEzBVdohT1xGoM/view?usp=sharing)
 
 ## Credits
