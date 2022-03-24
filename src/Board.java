@@ -5,13 +5,15 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class Board extends JPanel implements KeyListener, MouseListener {
+public class Board extends JPanel implements KeyListener, MouseListener, ActionListener {
 
 	private static final long serialVersionUID = -1258829533504593980L;
 	
 	private final static float FontSize = 36.0f;
 	private final static int LineThickness = 4;
 	private final static int BoxDimensions = 50;
+	
+	private int time = 0;
 	
 	private int[] cursorCoords = {4, 4};
 	
@@ -27,9 +29,19 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         setPreferredSize(new Dimension(BoxDimensions*9, BoxDimensions*11));
         
         setBackground(new Color(225, 225, 225));
-
+        
+        Timer timer = new Timer(1000, this);
+        timer.setRepeats(true);
+        timer.start();
+        
 	}
-
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {	
+		time += 1;
+		repaint();
+	}
+	
 	// Key Listener //
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -246,6 +258,10 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         g.setColor(new Color(245, 245, 245));
         g.drawString("Pen", (int) BoxDimensions*6 + spacingSize * 5, BoxDimensions*10+spacingSize*8);
         
+        g.setColor(new Color(120, 120, 120));
+        g.setFont(g.getFont().deriveFont(FontSize*.85f));
+        g.drawString("%d:%d".formatted(time/60, time%60), BoxDimensions*4+2, BoxDimensions*10+spacingSize*8);
+
     }
 	
 	// Getters
@@ -256,30 +272,30 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 	public static int getBoxdimensions() {
 		return BoxDimensions;
 	}
+
 	
 	// Unused Impl
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void mouseClicked(MouseEvent e) {		
 	}
 
+	@Override
+	public void mousePressed(MouseEvent e) {		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {		
+	}	
 	@Override
 	public void keyReleased(KeyEvent e) {
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-	}
-	
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
 	}
 	
 }
