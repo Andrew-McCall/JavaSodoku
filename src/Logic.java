@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Logic {
 	
 	private int[][] numbersValue = new int [9][9];
@@ -27,6 +29,8 @@ public class Logic {
 	
 	private void checkLegal(int x, int y) {
 				
+		boolean correct = true;
+		
 		for (int i = 0; i < 9; i++) {
 			for (int z = 0; z < 9; z++) {
 				if ((numbersMeta[i][z] == 2 || numbersMeta[i][z] == 4) && numbersValue[i][z] != 0){
@@ -34,12 +38,19 @@ public class Logic {
 					checkStraights(i, z);
 					checkBox(i,z);
 				}
+				if (numbersMeta[i][z] %2 == 0) {
+					correct = false;
+				}
 			}
 		}
 		
 		if (numbersMeta[x][y] != 0) {
 			checkStraights(x, y);
 			checkBox(x,y);
+		}
+		
+		if (correct == true) {
+			Arrays.stream(numbersMeta).forEach(a -> Arrays.fill(a, 5));
 		}
 		
 	}

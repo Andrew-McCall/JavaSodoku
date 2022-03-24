@@ -36,10 +36,16 @@ public class Board extends JPanel implements KeyListener, MouseListener, ActionL
         
 	}
 	
+	
+	// Timer
 	@Override
 	public void actionPerformed(ActionEvent e) {	
-		time += 1;
-		repaint();
+		if (dataLogic.getMeta(0, 0) != 5) {
+			time += 1;
+			repaint();
+		}else {
+	        ((Timer) e.getSource() ).stop();
+		}
 	}
 	
 	// Key Listener //
@@ -201,9 +207,12 @@ public class Board extends JPanel implements KeyListener, MouseListener, ActionL
             			case 3: // Permenent
             		        g.setColor(new Color(45, 45, 45));
             				break;
+            			
+            			case 5: // Green For Fin.
+            				g.setColor(new Color(45, 120, 45));
+            				break;
             				
-            			case 2: // Error
-            			case 4: 
+            			default: // Error (4 & 2) 
             		        g.setColor(new Color(255, 45, 45));
             		}
             		
@@ -212,7 +221,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, ActionL
             	}
             	
             }
-            
+          
         }
         
         // Mouse Extra //
@@ -260,8 +269,8 @@ public class Board extends JPanel implements KeyListener, MouseListener, ActionL
         
         g.setColor(new Color(120, 120, 120));
         g.setFont(g.getFont().deriveFont(FontSize*.85f));
-        g.drawString("%d:%d".formatted(time/60, time%60), BoxDimensions*4+2, BoxDimensions*10+spacingSize*8);
-
+        String timeString = "%d:%d".formatted(time/60, time%60);
+        g.drawString(timeString, (int) (BoxDimensions*4 + 1 - (time/600)*g.getFont().getSize()/2), BoxDimensions*10+spacingSize*8);
     }
 	
 	// Getters
