@@ -101,7 +101,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, ActionL
 			        timer.setRepeats(true);
 			        timer.start();
 			        
-					dataLogic.loadGame(Sodoku.getGameData());
+					Sodoku.getDatabase().newGame();
 			        
 				}
 				
@@ -300,7 +300,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, ActionL
         // Timer // 
         g.setColor(new Color(120, 120, 120));
         g.setFont(g.getFont().deriveFont(FontSize*.85f));
-        String timeString = "%d:%d".formatted(time/60, time%60);
+        String timeString = (String.format("%d:%d", time/60, time%60));
         g.drawString(timeString, (int) (BoxDimensions*4 + 1 - (time/600)*g.getFont().getSize()/2), BoxDimensions*10+spacingSize*8);
     }
 	

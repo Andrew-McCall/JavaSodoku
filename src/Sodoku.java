@@ -2,24 +2,28 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.RandomAccessFile;
-import java.util.Random;
 
 import javax.swing.*;
 
 public class Sodoku {
-	
 
+//	private String difficulty = "";
+	
+	private static JFrame window;
+	private static Logic dataLogic;
+	private static JPanel menu;
+	private static Database database;
+	
 	public static void main(String[] args) {
 				
-		JFrame window = new JFrame("Sodoku");
-		Logic dataLogic = new Logic();
+		window = new JFrame("Sodoku");
+		dataLogic = new Logic();
+		database = new Database();
 		
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // Menu //
-        JPanel menu = new JPanel(new GridLayout(4, 1, 10, 10));
+        menu = new JPanel(new GridLayout(6, 1, 15, 15));
 
         JLabel title = new JLabel("Sodoku Menu");
         title.setHorizontalTextPosition(JLabel.CENTER);
@@ -29,31 +33,35 @@ public class Sodoku {
 //        menu.setLayout();
         
         JButton empty = new JButton("Empty Board");
-        JButton random = new JButton("Random Board");
+        
+        JButton easy = new JButton("Easy");
+        JButton intermediate = new JButton("Intermediate");
+        JButton expert = new JButton("Expert");
+
         JButton exit = new JButton("Exit");
 
         empty.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boardinnit(dataLogic, menu, window);
+				boardinnit();
 	        }
          });
         
-        random.addActionListener( new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dataLogic.loadGame(getGameData());
-				boardinnit(dataLogic, menu, window);
-	        }
-         });
-        
+        easy.addActionListener( new Database() );
+        intermediate.addActionListener( new Database() );
+        expert.addActionListener( new Database() );
+
         exit.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {System.exit(0);}
          });
         
         menu.add(empty);
-        menu.add(random);
+        
+        menu.add(easy);
+        menu.add(intermediate);
+        menu.add(expert);
+        
         menu.add(exit);
         
         window.add(menu);
@@ -63,36 +71,10 @@ public class Sodoku {
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-                
-	}
+        
+	}	
 	
-	public static int[] getGameData() {
-		
-		int[] output = new int[81];
-		
-		try {
-			String result = "";
-			final RandomAccessFile f = new RandomAccessFile(new File("").getAbsolutePath() + "/data/games.csv", "r");
-		    Random rand = new Random(); //instance of random class
-	        f.seek(rand.nextInt((int) (Math.floor(f.length()/81)*81)));
-	        f.readLine();
-		    result = f.readLine();
-		    f.close();
-		    
-		    
-		    for (int i = 0; i < result.length(); i++) {
-		    	output[i] =  Character.getNumericValue(result.charAt(i))  ;
-		    } 
-		    
-	    } catch (Exception e) {
-	      System.out.println("Could not Load Game");
-	      e.printStackTrace();
-	    }
-		
-		return output;
-	}
-	
-	private static void boardinnit(Logic dataLogic, JPanel menu, JFrame window) {
+	public static void boardinnit() {
 		Board board = new Board(dataLogic);
 		menu.setVisible(false);
         window.add(board);
@@ -101,5 +83,25 @@ public class Sodoku {
         window.pack();
         window.repaint();
 	}
+	
+	// Getters and Setters
+	public static Database getDatabase() {
+		return database;
+	}
+
+	public static void setDatabase(Database database) {
+		Sodoku.database = database;
+	}
+
+	public static Logic getDataLogic() {
+		return dataLogic;
+	}
+
+	public static void setDataLogic(Logic dataLogic) {
+		Sodoku.dataLogic = dataLogic;
+	}
+
+
+
 	
 }
