@@ -9,13 +9,21 @@ Programmed this to refresh my java knowledge. I dislike tutorials and so my code
  Not the cleanest code but anyone is welcome to learn what they can from it. Hopefully it helps someone in the future.
 
 ## Images
+
 Start Menu
+
 ![Menu ](https://i.imgur.com/aF7Nnxt.png)
+
 Main Game
+
 ![Board](https://i.imgur.com/jjIQXtQ.png)
+
 Errors
+
 ![Errors](https://i.imgur.com/8CNVUM3.png)
+
 Completed
+
 ![Win](https://i.imgur.com/oNutBvP.png)
 
 ## Controls
