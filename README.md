@@ -30,13 +30,16 @@ Completed
 
 ### Mouse
 Left click square to write current number selected from bottom row.
+
 Right click to toggle Pen / Pencil
 
 Click bottom buttons (1-9 or Pen/Pencil) to change what will be written
 
 ### Keyboard
 Arrow keys move cursor (Square with outline)
+
 Number keys to write number
+
 Space or 0 to clear square
 
 ## Downloads
