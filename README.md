@@ -46,7 +46,7 @@ Space or 0 to clear square
 
 Source Code: [Git clone (Here)](https://github.com/Andrew-McCall/JavaSodoku.git) *I used eclipse and Oracle's java 8*
 
-Packaged .exe with JRE included: [Release Dpwmload]https://github.com/Andrew-McCall/JavaSodoku/releases/tag/2.7)
+Packaged .exe with JRE included: [Release Dpwmload](https://github.com/Andrew-McCall/JavaSodoku/releases/tag/2.7)
 
 ## Credits
 
